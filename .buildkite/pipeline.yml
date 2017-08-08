@@ -12,18 +12,24 @@ steps:
   - label: ':debian: Publish'
     command: echo 'publishing'
 
-  - block: ':shipit: Release'
-    branches: 'master'
+  - block: "Release"
+    prompt: "Fill out the details for release"
+    fields: 
+      - text: "Release Name"
+        key: "release-name"
+        hint: "Think of a cool name for this release"
+      - text: "Changelog"
+        key: "release-notes"
+        required: false
+        hint: "List of what's changed in this release"
+      - select: "Type"
+        key: "release-type"
+        default: "beta"
+        options:
+        - label: "Beta"
+          value: "beta"
+        - label: "Stable"
+          value: "stable"
 
-  - label: ':github: Release'
-    command: 'scripts/build-github-release.sh'
-    artifact_paths: 'releases/**/*'
-    branches: 'master'
-
-  - wait
-
-  - label: ':whale: Update images'
-    command: 'scripts/release-docker.sh'
-    branches: 'master'
-    agents:
-      queue: 'deploy'
+  - command: release.sh
+    label: ":rocket:"
