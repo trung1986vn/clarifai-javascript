@@ -1,25 +1,16 @@
 steps:
   - label: ':hammer: Tests'
-    command: 'scripts/tests.sh'
-    env:
-      BUILDKITE_DOCKER_COMPOSE_CONTAINER: app
-
+    command: echo 'test'
+    
   - wait
 
   - label: ':package: Package'
-    command: 'scripts/build-binaries.sh'
-    artifact_paths: 'pkg/*'
-    env:
-      BUILDKITE_DOCKER_COMPOSE_CONTAINER: app
+    command: echo 'packaging'
 
   - wait
 
   - label: ':debian: Publish'
-    command: 'scripts/build-debian-packages.sh'
-    artifact_paths: 'deb/**/*'
-    branches: 'master'
-    agents:
-      queue: 'deploy'
+    command: echo 'publishing'
 
   - block: ':shipit: Release'
     branches: 'master'
