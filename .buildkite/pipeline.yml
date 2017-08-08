@@ -5,31 +5,19 @@ steps:
   - wait
 
   - label: ':package: Package'
-    command: echo 'packaging'
+    command: echo 'package and push to ec2 registry'
 
-  - wait
-
-  - label: ':debian: Publish'
-    command: echo 'publishing'
-
-  - block: "Release"
-    prompt: "Fill out the details for release"
+  - block: ":rocket: Deploying"
+    prompt: "Choose system to deploy"
     fields: 
-      - text: "Release Name"
-        key: "release-name"
-        hint: "Think of a cool name for this release"
-      - text: "Changelog"
-        key: "release-notes"
-        required: false
-        hint: "List of what's changed in this release"
       - select: "Type"
         key: "release-type"
-        default: "beta"
+        default: "develop"
         options:
-        - label: "Beta"
-          value: "beta"
-        - label: "Stable"
-          value: "stable"
+        - label: "Dev"
+          value: "develop"
+        - label: "Staging"
+          value: "staging"
 
   - command: release.sh
     label: ":rocket:"
