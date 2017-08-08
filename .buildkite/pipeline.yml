@@ -1,6 +1,8 @@
 steps:
   - label: ':hammer: Tests'
-    command: echo 'test'
+    command: 
+      - echo 'test'
+      - ls
     
   - wait
 
